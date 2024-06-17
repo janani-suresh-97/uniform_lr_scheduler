@@ -35,7 +35,7 @@ and WRN-28-10 architectures).
 | DenseNet-121| Multi-step              | **87.50**             | **84.89**         | 2.39              |
 | DenseNet-121| PLRS (ours)             | 84.37                 | 83.33             | 0.90              |
 
-### Cifar 100
+### Cifar 10
 
 | **Architecture** | **Scheduler** | **Max Test acc.** | **Mean test acc. (S.D)** |
 |------------------|---------------|-------------------|-------------------------|
