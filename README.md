@@ -28,12 +28,12 @@ and WRN-28-10 architectures).
 | ResNet-110  | Constant                | 69.53                 | 66.67             | 2.51              |
 | ResNet-110  | Multi-step              | 63.28                 | 61.20             | 2.39              |
 | ResNet-110  | PLRS (ours)             | **77.34**             | **74.61**         | 2.95              |
-| DenseNet-121| Cosine                  | 82.81                 | 80.47             | 2.07              |
-| DenseNet-121| Knee                    | 82.81                 | 80.73             | 2.39              |
-| DenseNet-121| One-cycle               | 73.44                 | 72.39             | 0.90              |
-| DenseNet-121| Constant                | 82.81                 | 80.73             | 2.39              |
-| DenseNet-121| Multi-step              | **87.50**             | **84.89**         | 2.39              |
-| DenseNet-121| PLRS (ours)             | 84.37                 | 83.33             | 0.90              |
+| DenseNet-40-12| Cosine                  | 82.81                 | 80.47             | 2.07              |
+| DenseNet-40-12| Knee                    | 82.81                 | 80.73             | 2.39              |
+| DenseNet-40-12| One-cycle               | 73.44                 | 72.39             | 0.90              |
+| DenseNet-40-12| Constant                | 82.81                 | 80.73             | 2.39              |
+| DenseNet-40-12| Multi-step              | **87.50**             | **84.89**         | 2.39              |
+| DenseNet-40-12| PLRS (ours)             | 84.37                 | 83.33             | 0.90              |
 
 ### Cifar 10
 

@@ -83,8 +83,8 @@ def main():
     # model = vgg.VGG('VGG16')
     # model = wrn.Wide_ResNet(depth=28,widen_factor=10,num_classes=10)
     
-    model = densenet.DenseNet3(100, 100, args.growth, reduction=0.5,
-                         bottleneck=True, dropRate=0)
+    model = densenet.DenseNet3(40, 100, 12, reduction=1.0,
+                         bottleneck=False, dropRate=0)
     model.cuda()
 
     # optionally resume from a checkpoint
