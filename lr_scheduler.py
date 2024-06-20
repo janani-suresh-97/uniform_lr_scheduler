@@ -274,7 +274,31 @@ class LambdaLR(LRScheduler):
         return [base_lr * lmbda(self.last_epoch)
                 for lmbda, base_lr in zip(self.lr_lambdas, self.base_lrs)]
 
+class UniformNoisyLR(_LRScheduler):
+    """Decays the learning rate of each parameter group by gamma every epoch.
+    When last_epoch=-1, sets initial lr as lr.
 
+    Args:
+        optimizer (Optimizer): Wrapped optimizer.
+        gamma (float): Multiplicative factor of learning rate decay.
+        last_epoch (int): The index of last epoch. Default: -1.
+        verbose (bool): If ``True``, prints a message to stdout for
+            each update. Default: ``False``.
+    """
+
+    def __init__(self, optimizer, max_lr,min_lr,offset, verbose=False,last_epoch = -1):
+        self.min_lr = min_lr
+        self.offset = offset
+        self.max_lr = max_lr
+        super().__init__(optimizer, last_epoch, verbose)
+        
+
+    def get_lr(self):
+        if not self._get_lr_called_within_step:
+            warnings.warn("To get the last learning rate computed by the scheduler, "
+                          "please use `get_last_lr()`.", UserWarning)
+
+        return [np.random.uniform(self.min_lr - self.offset, self.max_lr - self.offset) + self.offset ]
 class MultiplicativeLR(LRScheduler):
     """Multiply the learning rate of each parameter group by the factor given
     in the specified function. When last_epoch=-1, sets initial lr as lr.
