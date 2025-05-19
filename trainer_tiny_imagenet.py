@@ -113,6 +113,36 @@ def main():
     optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, weight_decay=1e-4, momentum=0.9)
 
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs-args.warm_up*4, eta_min=0, last_epoch= -1, verbose=False)
+     # Multistep
+    # lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,
+    #                                                     milestones=[100, 150], last_epoch=args.start_epoch - 1)
+
+    # Cosine 
+    # lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer,
+    #                                         T_0 = 1,# Number of iterations for the first restart
+    #                                         T_mult = 2, # A factor increases TiTi after a restart
+    #                                         eta_min = 1e-4) # Minimum learning rate
+
+    lr_scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer,
+                                        base_lr = 0.01,# base lr
+                                        max_lr = 0.1, # max_lr
+                                        mode = "triangular",
+                                        step_size_up=8000,
+                                        ) # mode
+
+    # lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer=optimizer, max_lr=0.1,
+    #                                           max_momentum=0, base_momentum=0,pct_start=0.45,
+    #                                           steps_per_epoch=len(train_loader),epochs=args.epochs,
+    #                                           anneal_strategy="linear",div_factor=10,
+    #                                           three_phase=True)
+    # eta_max=0.1
+    # eta_min=0.07
+    # offset=0.08
+    # lr_scheduler = torch.optim.lr_scheduler.UniformNoisyLR(optimizer=optimizer,max_lr=eta_max,min_lr=eta_min,offset=offset) #gamma is the multiplicative factor
+#steps per epoch=391, explore epochs=100=39100 steps, warmup is 10 percent of total steps, not needed for resnet
+    # lr_scheduler=torch.optim.lr_scheduler.KneeLRScheduler(optimizer=optimizer,peak_lr = 0.1,warmup_steps= 0,explore_steps=39100,total_steps=195500)
+    
+
     if args.arch in ['resnet1202', 'resnet110']:
         # for resnet1202 original paper uses lr=0.01 for first 400 minibatches for warm-up
         # then switch back. In this setup it will correspond for first epoch.
