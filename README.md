@@ -2,70 +2,51 @@
 
 ## Abstract
 
-Learning rate schedulers have shown great success in speeding up the convergence of learn-
-ing algorithms in practice. However, their convergence to a minimum has not been proven
-theoretically. This difficulty mainly arises from the fact that, while traditional convergence
-analysis prescribes to monotonically decreasing learning rates, schedulers opt for rates that
-often increase and decrease through the training epochs. In this work, we aim to bridge
-the gap by proposing a probabilistic learning rate scheduler (PLRS), that does not con-
-form to the monotonically decreasing condition, with provable convergence guarantees. In
-addition to providing detailed convergence proofs, we also show experimental results where
-the proposed PLRS performs competitively as other state-of-the-art learning rate sched-
-ulers. Specifically, we show that our scheduler performs the best or close to best using the
-CIFAR-100 (on ResNet-110 and DenseNet-121 architectures) and CIFAR-10 (on VGG-16
-and WRN-28-10 architectures).
+    Learning rate schedulers have shown great success in speeding up the convergence of learning algorithms in practice. However, their convergence to a minimum has not been theoretically proven. This difficulty mainly arises from the fact that, while traditional convergence analysis prescribes to monotonically decreasing (or constant) learning rates, schedulers opt for rates that often increase and decrease through the training epochs. We aim to bridge this gap by proposing a probabilistic learning rate scheduler (PLRS) that does not conform to the monotonically decreasing condition, while achieving provable convergence guarantees. 
+To demonstrate the practical effectiveness of our approach, we evaluate it on deep neural networks across both vision and language tasks, showing competitive or superior performance compared to state-of-the-art learning rate schedulers. Specifically, our experiments include (a) image classification on CIFAR-10, CIFAR-100, Tiny ImageNet, and ImageNet-1K using ResNet, WRN, VGG, and DenseNet architectures, and (b) language model fine-tuning on the SQuAD v1.1 dataset with pretrained BERT. Notably, on ImageNet-1K with ResNet-50, our method surpasses the leading knee scheduler by 2.79% in classification accuracy.
 
 
-### Results Summary
-
-### Cifar 100
-
-| Model       | Learning Rate Schedule | Training Accuracy (%) | Test Accuracy (%) | Accuracy Drop (%) |
-|-------------|-------------------------|-----------------------|-------------------|-------------------|
-| ResNet-110  | Cosine                  | 74.22                 | 72.66             | 1.56              |
-| ResNet-110  | Knee                    | 75.78                 | 72.39             | 2.96              |
-| ResNet-110  | One-cycle               | 71.09                 | 70.05             | 1.19              |
-| ResNet-110  | Constant                | 69.53                 | 66.67             | 2.51              |
-| ResNet-110  | Multi-step              | 63.28                 | 61.20             | 2.39              |
-| ResNet-110  | PLRS (ours)             | **77.34**             | **74.61**         | 2.95              |
-| DenseNet-40-12| Cosine                  | 82.81                 | 80.47             | 2.07              |
-| DenseNet-40-12| Knee                    | 82.81                 | 80.73             | 2.39              |
-| DenseNet-40-12| One-cycle               | 73.44                 | 72.39             | 0.90              |
-| DenseNet-40-12| Constant                | 82.81                 | 80.73             | 2.39              |
-| DenseNet-40-12| Multi-step              | **87.50**             | **84.89**         | 2.39              |
-| DenseNet-40-12| PLRS (ours)             | 84.37                 | 83.33             | 0.90              |
-
-### Cifar 10
-
-| **Architecture** | **Scheduler** | **Max Test acc.** | **Mean test acc. (S.D)** |
-|------------------|---------------|-------------------|-------------------------|
-| VGG-16           | Cosine        | 96.87             | 96.09 (0.78)            |
-| VGG-16           | Knee          | 96.87             | **96.35** (0.45)        |
-| VGG-16           | One-cycle     | 90.62             | 89.06 (1.56)            |
-| VGG-16           | Constant      | 96.09             | 96.06 (0.05)            |
-| VGG-16           | Multi-step    | 92.97             | 92.45 (0.90)            |
-| VGG-16           | PLRS (ours)   | **97.66**         | 96.09 (1.56)            |
-| WRN-28-10        | Cosine        | 92.03             | 91.90 (0.13)            |
-| WRN-28-10        | Knee          | **92.04**         | 91.64 (0.63)            |
-| WRN-28-10        | One-cycle     | 87.76             | 87.37 (0.35)            |
-| WRN-28-10        | Constant      | **92.04**         | **92.00** (0.08)        |
-| WRN-28-10        | Multi-step    | 88.94             | 88.80 (0.21)            |
-| WRN-28-10        | PLRS (ours)   | 92.02             | 91.43 (0.54)            |
 
 ### Usage
-
-* The code supports cifar10 and cifar100 dataset. To change it to cifar 100 the user is expected to modify the datset in the trainer.py.
-
+* The code supports cifar10,cifar100,tinyimagenet,imagenet,SQuAD v1.1.
+#### Cifar10  and Cifar100
+* To  run cifar 10 and cifar 100 the user is expected to modify the dataset in the trainer.py.
 * Replace the lr_scheduler.py in the location
-```torch/optim/``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
-
+```torch/optim/lr_scheduler.py``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
 * Uncomment the models that you wish to run with modified checkpoints and uncomment the lr_scheduler that you wish to run the code with. The hyperparameters are within the code the user is not expected to change to replicate the same results in the paper.
-
 * Run
-
 ```
     chmod +x run.sh
    ./run.sh
 ```
+#### Tiny imagenet
+* To  run tiny imagenet the user is expected to modify the dataset in the tiny_imagenet_trainer.py.
+* Replace the lr_scheduler.py in the location
+```torch/optim/lr_scheduler.py``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
+* Uncomment the models that you wish to run with modified checkpoints and uncomment the lr_scheduler that you wish to run the code with. The hyperparameters are within the code the user is not expected to change to replicate the same results in the paper.
+* Make sure that the dataset is present in the desired location.
+* Run
+```
+    python tiny_imagenet_trainer.py
+```
+#### Imagenet-1K
+* To  run tiny imagenet the user is expected to modify the dataset in the imagenet_trainer.py.
+* Replace the lr_scheduler.py in the location
+```torch/optim/lr_scheduler.py``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
+* Uncomment the models that you wish to run with modified checkpoints and uncomment the lr_scheduler that you wish to run the code with. The hyperparameters are within the code the user is not expected to change to replicate the same results in the paper.
+* Make sure that the dataset is present in the desired location.
+* Run
+```
+    python imagenet_trainer.py
+```
 
+#### BERT
+* Run the bert_baseline.ipynb file to run BERT with SQuAD v1.1.
+* To work with the new lr modify the **trainer_qa.py** script in the **transformers/examples/pytorch/question-answering/trainer_qa.py** in the transformer library.
 
+### Transformer architecture with fairseq
+* Follow the  [https://github.com/facebookresearch/fairseq/blob/main/examples/translation/README.md](documentation) to setup the code
+* Modifications to make is to add the uniform_lr_scheduler.py in the fairseq library. After which the path will become **lib/python3.1/site-packages/fairseq/optim/lr_scheduler/uniform_lr_scheduler.py**. Fine tunings of the lr scheduler is done in the same script.
+* Command to run for uniform lr scheduler:
+  CUDA_VISIBLE_DEVICES=0 fairseq-train     data-bin/iwslt14.tokenized.de-en     --arch transformer_iwslt_de_en --share-decoder-input-output-embed     --optimizer adam --adam-betas '(0.9, 0.999)' --clip-norm 0.0     --lr 3e-4 --lr-scheduler uniform      --dropout 0.3 --weight-decay 0.0001     --criterion label_smoothed_cross_entropy --label-smoothing 0.1     --max-tokens 4096     --eval-bleu     --eval-bleu-args '{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}'     --eval-bleu-detok moses     --eval-bleu-remove-bpe     --eval-bleu-print-samples     --best-checkpoint-metric bleu --maximize-best-checkpoint-metric --max-epoch 50.
+  
