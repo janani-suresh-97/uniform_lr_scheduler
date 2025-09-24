@@ -1,4 +1,4 @@
-# Probabilistic learning rate scheduler with provable convergence
+# RANDOMNESS HELPS RIGOR: A PROBABILISTIC LEARNING RATE SCHEDULER BRIDGING THEORY AND DEEP LEARNING PRACTICE
 
 ## Abstract
 Learning rate schedulers have shown great success in speeding up the convergence of learning algorithms in practice. However, their convergence to a minimum has not been theoretically proven. This difficulty mainly arises from the fact that, while traditional convergence analysis prescribes to monotonically decreasing (or constant) learning rates, schedulers opt for rates that often increase and decrease through the training epochs. We aim to bridge this gap by proposing a probabilistic learning rate scheduler (PLRS) that does not conform to the monotonically decreasing condition, while achieving provable convergence guarantees. 
@@ -19,7 +19,7 @@ To demonstrate the practical effectiveness of our approach, we evaluate it on de
    ./run.sh
 ```
 #### Tiny imagenet
-* To  run tiny imagenet the user is expected to modify the dataset in the tiny_imagenet_trainer.py.
+* To  run tiny imagenet the user is expected to modify the dataset in the trainer_tiny_imagenet.py.
 * Replace the lr_scheduler.py in the location
 ```torch/optim/lr_scheduler.py``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
 * Uncomment the models that you wish to run with modified checkpoints and uncomment the lr_scheduler that you wish to run the code with. The hyperparameters are within the code the user is not expected to change to replicate the same results in the paper.
@@ -29,7 +29,7 @@ To demonstrate the practical effectiveness of our approach, we evaluate it on de
     python tiny_imagenet_trainer.py
 ```
 #### Imagenet-1K
-* To  run tiny imagenet the user is expected to modify the dataset in the imagenet_trainer.py.
+* To  run tiny imagenet the user is expected to modify the dataset in the trainer_imagenet.py.
 * Replace the lr_scheduler.py in the location
 ```torch/optim/lr_scheduler.py``` with the lr_scheduler.py in the given repository. You should be able to find your torch directory within your interpreter folder.
 * Uncomment the models that you wish to run with modified checkpoints and uncomment the lr_scheduler that you wish to run the code with. The hyperparameters are within the code the user is not expected to change to replicate the same results in the paper.
